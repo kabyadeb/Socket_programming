@@ -1,0 +1,82 @@
+import javax.net.*; // you can use * instead of adding headers
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.InetAddress;
+import java.time.LocalDateTime;
+import java.util.Base64;
+import java.util.Scanner;
+// kabya deb 26 feb 2025
+public class practiceMail {
+    private static DataOutputStream dos;
+    public static BufferedReader br;
+
+    public static void main(String[] args) throws Exception {
+        String user = "s****@ru.ac.bd";
+        System.out.println("Please enter the password:\r\n");
+        Scanner sii =new Scanner(System.in);// terminal input for password
+        String pass =sii.nextLine();
+        SSLSocket s = (SSLSocket) SSLSocketFactory.getDefault().createSocket("smtp.gmail.com",465);
+        String username =new String(Base64.getEncoder().encode(user.getBytes()));
+        String password = new String(Base64.getEncoder().encode(pass.getBytes()));
+        dos = new DataOutputStream(s.getOutputStream());
+        br =new BufferedReader(new InputStreamReader(s.getInputStream()));
+        InetAddress inetAddress =InetAddress.getLocalHost();
+
+
+        send("EHLO smtp.gmail.com\r\n"); // hello to the server
+        System.out.println("SERVER:"+br.readLine());
+        System.out.println("SERVER:"+br.readLine());
+        System.out.println("SERVER:"+br.readLine());
+        System.out.println("SERVER:"+br.readLine());
+        System.out.println("SERVER:"+br.readLine());
+        System.out.println("SERVER:"+br.readLine());
+        System.out.println("SERVER:"+br.readLine());
+        System.out.println("SERVER:"+br.readLine());
+        System.out.println("SERVER:"+br.readLine());
+        System.out.println("SERVER:"+br.readLine());
+        System.out.println("SERVER:"+br.readLine());
+
+        send("AUTH LOGIN\r\n");// authentication
+        System.out.println("SERVER:"+br.readLine());
+
+        send(username+"\r\n");
+        System.out.println("SERVER:"+br.readLine());
+
+        send(password+"\r\n");
+        System.out.println("SERVER:"+br.readLine());
+
+        send("MAIL FROM:<"+username+">\r\n");//user's mail
+        System.out.println("SERVER:"+br.readLine());
+
+        send("RCPT TO:<xxxx@gmail.com>\r\n");// sending email
+        System.out.println("SERVER:"+br.readLine());
+
+        send("DATA\r\n");
+        System.out.println("SERVER:"+br.readLine());
+
+        send("FROM:"+username+"\r\n");// sender
+        send("TO: xxxx@gmail.com\r\n");// sending email
+        send("SUBJECT: Loving you\r\n");
+        send("\r\n");
+        send("LAST try.save me");
+        send(String.valueOf(LocalDateTime.now())+"\r\n");// time
+        send(inetAddress+"\r\n");// ip adress
+        send(".\r\n");
+        System.out.println("SERVER:"+br.readLine());
+
+        send("QUIT\r\n");
+        System.out.println("SERVER:"+br.readLine());
+
+    }
+
+    private static void send(String s) throws Exception
+    {
+        dos.writeBytes(s);
+        Thread.sleep(1000);
+        System.out.println("Clint: "+ s);
+    }
+}
