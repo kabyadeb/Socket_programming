@@ -1,0 +1,32 @@
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.Enumeration;
+
+public class lastTry {
+    public static void main(String[] args){
+        try {
+            Enumeration<NetworkInterface> networks=NetworkInterface.getNetworkInterfaces();
+            while (networks.hasMoreElements()){
+//                System.out.println(networks.nextElement().getDisplayName());
+                NetworkInterface current=networks.nextElement();
+                StringBuilder stringBuilder=new StringBuilder();
+                if(current.getDisplayName().equals("wlo1")){
+                    byte[] mac= current.getHardwareAddress();
+                    for (byte x:
+                            mac
+                         ) {
+                        stringBuilder.append(String.format("%02X",x));
+//                        System.out.println(x);
+                    }
+                }
+                System.out.println(stringBuilder.toString());
+            }
+        }catch (Exception e){
+
+        }
+// kabya deb 1/03/25
+
+    }
+}
