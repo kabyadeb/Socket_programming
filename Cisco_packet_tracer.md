@@ -14,7 +14,7 @@ Run the following command to install the **Packet Tracer** package:
 ```bash
 sudo dpkg -i Packet_Tracer822_amd64_signed.deb
 ```
-    ## wait a minute ? faced trouble 
+## wait a minute ? faced trouble 
 
 ### 2. Install Required Dependencies
 For **Ubuntu Noble (24.xx)**, you need to install some additional dependencies.
